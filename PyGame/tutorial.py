@@ -27,7 +27,6 @@ SONIDO_DIR = "resources\sounds"
 def load_image(nombre, dir_imagen, alpha=False):
     # Encontramos la ruta completa de la imagen
     ruta = os.path.join(dir_imagen, nombre)
-    print ruta
     try:
         image = pygame.image.load(ruta)
     except:
@@ -41,11 +40,9 @@ def load_image(nombre, dir_imagen, alpha=False):
     return image
 
 def load_sound(nombre, dir_sonido):
-    print "Entre aca"
     ruta = os.path.join(dir_sonido, nombre)
     # Intentar cargar el sonido
     try:
-        print "Cargando sonido"
         sonido = pygame.mixer.Sound(ruta)
     except pygame.error, message:
         print "No se pudo cargar el sonido:", ruta
