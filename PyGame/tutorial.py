@@ -41,13 +41,13 @@ def load_image(nombre, dir_imagen, alpha=False):
 
 def load_sound(nombre, dir_sonido):
     ruta = os.path.join(dir_sonido, nombre)
+    print "RUTA " + ruta
     # Intentar cargar el sonido
     try:
-        sonido = pygame.mixer.Sound(ruta)
+        pygame.mixer.music.load(ruta)
+        pygame.mixer.music.play()
     except pygame.error, message:
-        print "No se pudo cargar el sonido:", ruta
         sonido = None
-    return sonido    
 
 class Pelota(pygame.sprite.Sprite):
     "La bola y su comportamiento en la pantalla"
@@ -65,7 +65,6 @@ class Pelota(pygame.sprite.Sprite):
     def update(self):
         if self.rect.left < 0 or self.rect.right > SCREEN_WIDTH:
             self.speed[0] = -self.speed[0]
-            # self.sonido_punto.play()
             self.rect.centerx = SCREEN_WIDTH / 2
             self.rect.centery = SCREEN_HEIGHT / 2
         if self.rect.top < 0 or self.rect.bottom > SCREEN_HEIGHT:
@@ -75,7 +74,6 @@ class Pelota(pygame.sprite.Sprite):
     def colision(self, objetivo):
         if self.rect.colliderect(objetivo.rect):
             self.speed[0] = -self.speed[0]
-            # self.sonido_golpe.play()
 
 class Paleta(pygame.sprite.Sprite):
     "Define el comportamiento de las paletas de ambos jugadores"
@@ -108,12 +106,11 @@ def main():
     # creamos la ventana y le indicamos un titulo:
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Ping Pong")
- 
     # cargamos el fondo
     fondo = load_image("fondo_tutorial3.jpg", IMG_DIR, alpha=False)
     # cargamos sonidos
-    sonido_golpe = load_sound("Sleep Away.mp3", SONIDO_DIR)
-    sonido_punto = load_sound("Sleep Away.mp3", SONIDO_DIR)    
+    sonido_golpe = load_sound("tennis.ogg", SONIDO_DIR)
+    sonido_punto = load_sound("aplausos.ogg", SONIDO_DIR)
     bola = Pelota(sonido_golpe,sonido_punto)
     jugador1 = Paleta(10)
     jugador2 = Paleta(SCREEN_WIDTH - 10)
