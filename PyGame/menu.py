@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
  
 import pygame
+import utilities
 from pygame.locals import *
-import sys
-import os
  
 # -----------
 # Constantes
@@ -20,59 +19,46 @@ SONIDO_DIR = "resources\sounds"
 # ------------------------------
 # Clases y Funciones utilizadas
 # ------------------------------
-def load_image(nombre, dir_imagen, alpha=False):
-    # Encontramos la ruta completa de la imagen
-    ruta = os.path.join(dir_imagen, nombre)
-    try:
-        image = pygame.image.load(ruta)
-    except:
-        print "Error, no se puede cargar la imagen: ", ruta
-        sys.exit(1)
-    # Comprobar si la imagen tiene "canal alpha" (como los png)
-    if alpha == True:
-        image = image.convert_alpha()
-    else:
-        image = image.convert()
-    return image
 
-def load_sound(nombre, dir_sonido):
-    ruta = os.path.join(dir_sonido, nombre)
-    # Intentar cargar el sonido
-    try:
-        pygame.mixer.music.load(ruta)
-        pygame.mixer.music.play()
-    except pygame.error, message:
-        sonido = None
+class GameMenu():
+    
+    def __init__(self, screen, items, bg_color=(0,0,0), font=None, font_size=30,
+                    font_color=(255, 255, 255)):
+        self.screen = screen
+        self.bg_color = bg_color
+        self.clock = pygame.time.Clock()
+        self.font = pygame.font.SysFont(font, font_size)
+        self.font_color = font_color
+        self.items = []
+        for item in items:
+            label = self.font.render(item, 1, font_color)
+            self.items.append(label)
  
+    def run(self):
+        mainloop = True
+        utilities.load_sound("Medieval\prologue.mp3",SONIDO_DIR)
+        while mainloop:
+            # Limit frame speed to 50 FPS
+            self.clock.tick(50)
+ 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    mainloop = False
+ 
+            # Redraw the background
+            self.screen.fill(self.bg_color)
+            for label in self.items:
+                self.screen.blit(label, (100, 100))
+            pygame.display.flip()
+            
 # ------------------------------
 # Funci�n principal del juego
 # ------------------------------
- 
-def main():
-    pygame.init()
-    pygame.mixer.init()
-    # creamos la ventana y le indicamos un titulo:
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Game")
-
-    # se define la letra por defecto
-    fuente = pygame.font.Font(None, 20)
-     # se crea un proyectil a lanzar
-    pygame.key.set_repeat(1, 80) # Activa repetici�n de teclas
-    clock = pygame.time.Clock()
-    # el bucle principal del juego
-    load_sound("Medieval\prologue.mp3", SONIDO_DIR)
-    while True:
-        clock.tick(60)
-        # Posibles entradas del teclado y mouse
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == K_ESCAPE:
-                    sys.exit()
-        pygame.display.flip()
- 
- 
 if __name__ == "__main__":
-    main()
+    pygame.init()
+    menu_items = ('Start', 'Quit')
+    # Creating the screen
+    screen = pygame.display.set_mode((640, 480), 0, 32)
+    pygame.display.set_caption('Game Menu')
+    gm = GameMenu(screen,menu_items)
+    gm.run()
