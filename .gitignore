@@ -1,3 +1,5 @@
 .project
 .pydevproject
 .settings/
+PyGame/*.pyc
+PyGame/resources/imgs/HFMegaPak
