@@ -10,7 +10,6 @@ from pygame.locals import *
 def load_image(nombre, dir_imagen, alpha=False):
     # Find route
     ruta = os.path.join(dir_imagen, nombre)
-    print ruta
     try:
         image = pygame.image.load(ruta)
     except:

@@ -29,11 +29,16 @@ class GameMenu():
         self.background = utilities.load_image("HFMegaPak\Backgrounds\Badland 1.png", IMG_DIR, alpha=False)
         self.song = "Medieval\prologue.mp3"
         for index, item in enumerate(self.menu_items):
-            label = self.font.render(item, 1, font_color)
+            if(item == "Start"):
+                label = self.font.render(item, 1, (0,0,0))
+                selected = True
+            elif item == "Quit":
+                label = self.font.render(item, 1, font_color)
+                selected = False
             width = label.get_rect().width
             height = label.get_rect().height
             posx = (self.scr_width / 2) - (width / 2)
             # t_h: total height of text block
             t_h = len(self.menu_items) * height
             posy = (self.scr_height / 2) - (t_h / 2) + (index * height)
-            self.items.append([item, label, (width, height), (posx, posy)])
+            self.items.append([item, label, (width, height), (posx, posy),selected])
