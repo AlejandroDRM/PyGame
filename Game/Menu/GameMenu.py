@@ -5,13 +5,13 @@ import pygame
 
 IMG_DIR = "resources\imgs"
 SONIDO_DIR = "resources\sounds"
- 
+
 # ------------------------------
 # Clases y Funciones utilizadas
 # ------------------------------
 
 class GameMenu():
-    
+
     def __init__(self, screen,background,  bg_color=(0,0,0), font=None, font_size=30,
                     font_color=(255, 255, 255)):
         self.menu_items = ('Start', 'Quit')
@@ -23,7 +23,7 @@ class GameMenu():
         self.font = pygame.font.SysFont(font, font_size)
         self.font_color = font_color
         self.items = []
-        self.background = background 
+        self.background = background
         self.song = "Medieval\prologue.mp3"
         for index, item in enumerate(self.menu_items):
             if(item == "Start"):
@@ -39,3 +39,4 @@ class GameMenu():
             t_h = len(self.menu_items) * height
             posy = (self.scr_height / 2) - (t_h / 2) + (index * height)
             self.items.append([item, label, (width, height), (posx, posy),selected])
+
