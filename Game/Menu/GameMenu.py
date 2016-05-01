@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import pygame
-import utilities
-from pygame.locals import *
- 
 
 IMG_DIR = "resources\imgs"
 SONIDO_DIR = "resources\sounds"
@@ -15,7 +12,7 @@ SONIDO_DIR = "resources\sounds"
 
 class GameMenu():
     
-    def __init__(self, screen,  bg_color=(0,0,0), font=None, font_size=30,
+    def __init__(self, screen,background,  bg_color=(0,0,0), font=None, font_size=30,
                     font_color=(255, 255, 255)):
         self.menu_items = ('Start', 'Quit')
         self.screen = screen
@@ -26,7 +23,7 @@ class GameMenu():
         self.font = pygame.font.SysFont(font, font_size)
         self.font_color = font_color
         self.items = []
-        self.background = utilities.load_image("HFMegaPak\Backgrounds\Badland 1.png", IMG_DIR, alpha=False)
+        self.background = background 
         self.song = "Medieval\prologue.mp3"
         for index, item in enumerate(self.menu_items):
             if(item == "Start"):
